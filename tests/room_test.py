@@ -5,10 +5,12 @@ from classes.guest import Guest
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room = Room("Room 1")
+        self.room = Room("Room 1", 3)
         self.song = Song("Africa", "Toto")
         self.guest_1 = Guest("Elton")
         self.guest_2 = Guest("Dolly")
+        self.guest_3 = Guest("Kylie")
+        self.guest_4 = Guest("Bruce")
 
     
     def test_room_has_name(self):
@@ -38,4 +40,17 @@ class TestRoom(unittest.TestCase):
         self.room.add_guest(self.guest_2)
         self.room.remove_guest(self.guest_1)
         self.assertEqual(1, len(self.room.guests))
+
+
+    def test_room_has_guest_limit(self):
+        self.room.add_guest(self.guest_1)
+        self.room.add_guest(self.guest_2)
+        self.room.add_guest(self.guest_3)
+        self.assertEqual("Sorry, no space left!", self.room.add_guest(self.guest_4)), 
+
+        
+
+
+    
+
     
