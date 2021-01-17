@@ -6,11 +6,14 @@ from classes.guest import Guest
 class TestRoom(unittest.TestCase):
     def setUp(self):
         self.room = Room("Room 1", 3, 5.00, 100.00)
-        self.song = Song("Africa", "Toto")
-        self.guest_1 = Guest("Elton", 30.00)
-        self.guest_2 = Guest("Dolly", 40.00)
-        self.guest_3 = Guest("Kylie", 50.00)
-        self.guest_4 = Guest("Bruce", 50.00)
+        self.song_1 = Song("Africa", "Toto")
+        self.song_2 = Song("Purple Rain", "Prince")
+        self.song_3 = Song("Dancing Queen", "Abba")
+        
+        self.guest_1 = Guest("Elton", 30.00, "Purple Rain")
+        self.guest_2 = Guest("Dolly", 40.00, "Wannabe")
+        self.guest_3 = Guest("Kylie", 50.00, "Africa")
+        self.guest_4 = Guest("Bruce", 50.00, "Enter Sandman")
 
     
     def test_room_has_name(self):
@@ -26,8 +29,9 @@ class TestRoom(unittest.TestCase):
 
 
     def test_can_add_song(self):
-        self.room.add_song(self.song)
-        self.assertEqual(1, len(self.room.song_list))
+        self.room.add_song(self.song_1)
+        self.room.add_song(self.song_2)
+        self.assertEqual(2, len(self.room.song_list))
 
     
     def test_can_add_guest(self):
@@ -56,6 +60,23 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(25.00, self.guest_1.wallet)
         self.assertEqual(35.00, self.guest_2.wallet)
         
+
+    def test_guest_can_search_for_favourite_song_found(self):
+        self.room.add_song(self.song_1)
+        self.room.add_song(self.song_2)
+        self.room.add_song(self.song_3)
+        self.room.add_guest(self.guest_1)
+        self.room.add_guest(self.guest_2)
+        self.assertEqual("Whoo!", self.room.search_for_favourite_song(self.guest_1))
+
+
+    def test_guest_can_search_for_favourite_song_not_found(self):
+        self.room.add_song(self.song_1)
+        self.room.add_song(self.song_2)
+        self.room.add_song(self.song_3)
+        self.room.add_guest(self.guest_1)
+        self.room.add_guest(self.guest_2)
+        self.assertEqual("I don't like this room.", self.room.search_for_favourite_song(self.guest_2))
 
 
 

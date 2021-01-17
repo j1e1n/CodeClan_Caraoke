@@ -27,3 +27,12 @@ class Room:
         for guest in self.guests:
             guest.pay_entry_fee(amount)
             self.total_cash += amount
+
+
+    def search_for_favourite_song(self, guest):
+        for song in self.song_list:
+            if song.title == guest.favourite_song:
+                return "Whoo!"
+             
+        return "I don't like this room."
+        
