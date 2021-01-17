@@ -5,12 +5,12 @@ from classes.guest import Guest
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room = Room("Room 1", 3)
+        self.room = Room("Room 1", 3, 5.00, 100.00)
         self.song = Song("Africa", "Toto")
-        self.guest_1 = Guest("Elton")
-        self.guest_2 = Guest("Dolly")
-        self.guest_3 = Guest("Kylie")
-        self.guest_4 = Guest("Bruce")
+        self.guest_1 = Guest("Elton", 30.00)
+        self.guest_2 = Guest("Dolly", 40.00)
+        self.guest_3 = Guest("Kylie", 50.00)
+        self.guest_4 = Guest("Bruce", 50.00)
 
     
     def test_room_has_name(self):
@@ -46,9 +46,17 @@ class TestRoom(unittest.TestCase):
         self.room.add_guest(self.guest_1)
         self.room.add_guest(self.guest_2)
         self.room.add_guest(self.guest_3)
-        self.assertEqual("Sorry, no space left!", self.room.add_guest(self.guest_4)), 
+        self.assertEqual("Sorry, no space left!", self.room.add_guest(self.guest_4))
 
+    def test_room_can_take_entry_fee(self):
+        self.room.add_guest(self.guest_1)
+        self.room.add_guest(self.guest_2)
+        self.room.take_entry_fee(self.room.entry_fee)
+        self.assertEqual(110.00, self.room.total_cash)
+        self.assertEqual(25.00, self.guest_1.wallet)
+        self.assertEqual(35.00, self.guest_2.wallet)
         
+
 
 
     
